@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"strings"
 	"time"
 )
 
@@ -18,17 +19,17 @@ func randomState(width int, height int) [][]int {
 }
 
 func render(board [][]int) {
+	var builder strings.Builder
+	symbols := []string{" ", "x"}
+
 	for i := 0; i < len(board); i++ {
 		for j := 0; j < len(board[i]); j++ {
-			switch board[i][j] {
-			case 0:
-				fmt.Print(" ")
-			case 1:
-				fmt.Print("x")
-			}
+			builder.WriteString(symbols[board[i][j]])
 		}
-		fmt.Println()
+		builder.WriteString("\n")
 	}
+
+	fmt.Print(builder.String())
 }
 
 func countNeighbor(board [][]int, x, y int) int {
@@ -93,8 +94,8 @@ func nextBoardState(board [][]int) {
 }
 
 func main() {
-	board := randomState(24, 80)
-	ticker := time.NewTicker(80 * time.Millisecond)
+	board := randomState(42, 130)
+	ticker := time.NewTicker(60 * time.Millisecond)
 
 	for {
 		<-ticker.C
